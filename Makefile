@@ -70,6 +70,9 @@ test-emu: $(EMU) $(ASM_OBJ_FILES) $(ASSEMBLER) src/main/scala/alu-sequencer/ALU.
 	@echo "Running ALU sequencer simulator. Waveforms are in 'build/foo.vcd'"
 	@build/emu -i $(ASM_BIN_DIR)/foo.bin -t $(BUILD)/foo.vcd
 
+show-waveform:
+	@gtkwave $(BUILD)/foo.vcd
+
 test-alu: src/main/scala/alu-sequencer/ALU.scala
 	@sbt 'testOnly aluseq.ALUTester -- -DwriteVcd=1'
 
