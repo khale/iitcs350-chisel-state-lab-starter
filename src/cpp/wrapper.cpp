@@ -28,26 +28,29 @@ double sc_time_stamp() {
 
 
 static void usage (const char * prog) {
-    printf("%s [-i <input image>] [-t]\n"
-            "   -i <input image> : specifies program binary to run (default image.bin)\n"
-            "   -t [trace file]  : specifies to generate a waveform (.vcd) file\n",
+    printf("%s [-i <input image>] [-t <trace file>]\n"
+            "   -i <input image> : specifies program binary to run\n"
+            "   -t <trace file>  : specifies to generate a waveform (.vcd) file\n",
             prog);
     exit(EXIT_SUCCESS);
 }
 
 static inline void parse_args(int argc, char *argv[]) {
     int arg;
-    while ((arg = getopt(argc, argv, "i:th")) != -1) {
+    while ((arg = getopt(argc, argv, "i:t:h")) != -1) {
         switch (arg) {
             case 'i':
                 memset(image, 0, MAX_IMAGE_NAME_LEN);
                 strncpy(image, optarg, MAX_IMAGE_NAME_LEN);
+                printf("using binary image: %s\n", image);
                 break;
             case 't':
                 trace_en = true;
+                printf("found t, optarg=%s\n", optarg);
                 if (optarg) {
                     memset(trace_file, 0, MAX_IMAGE_NAME_LEN);
                     strncpy(trace_file, optarg, MAX_IMAGE_NAME_LEN);
+                    printf("using trace file %s\n", trace_file);
                 }
                 break;
             case 'h':
@@ -77,7 +80,7 @@ int main (int argc, char **argv)
 
     if (trace_en) {
         top->trace(tfp, 99);
-        tfp->open("./build/emu.vcd");
+        tfp->open(trace_file);
     }
 
     init_ram(image);

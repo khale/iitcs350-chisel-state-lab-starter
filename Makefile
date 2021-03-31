@@ -67,6 +67,8 @@ $(ASM_BIN_DIR)/%.bin: $(ASM_SRC_DIR)/%.asm
 test-all: test-sr test-fsm test-alu test-emu 
 
 test-emu: $(EMU) $(ASM_OBJ_FILES) $(ASSEMBLER) src/main/scala/alu-sequencer/ALU.scala src/main/scala/alu-sequencer/Top.scala
+	@echo "Running ALU sequencer simulator. Waveforms are in 'build/foo.vcd'"
+	@build/emu -i $(ASM_BIN_DIR)/foo.bin -t $(BUILD)/foo.vcd
 
 test-alu: src/main/scala/alu-sequencer/ALU.scala
 	@sbt 'testOnly aluseq.ALUTester -- -DwriteVcd=1'
