@@ -26,7 +26,7 @@ class RAMHelper() extends BlackBox {
 // 32-bits long, and have the same instruction encoding, adhering to the
 // following format:
 //
-//  3 bits      8 bits       8 bits     11 bits
+//  3 bits      8 bits       8 bits     13 bits
 // -----------------------------------------------
 // | opcode |  operand 1 | operand 2 |  unused   |
 // -----------------------------------------------
